@@ -6,14 +6,17 @@ class Controls {
         this.right = false;
         this.fire = false;
 
-        this.mouse = { x: 200, y: 100, wheel: 1 };
+        this.mouse = { x: 200, y: 100, wheel: 0 };
 
         this.keyMap = new Map([
             [37, "left"],
             [39, "right"],
             [38, "up"],
             [40, "down"],
-            [32, "fire"],
+            [65, "left"],
+            [68, "right"],
+            [87, "up"],
+            [83, "down"],
         ]);
         document.addEventListener("keydown", (event) =>
             this.update(event, true)
@@ -38,6 +41,8 @@ class Controls {
             event.preventDefault();
             event.stopPropagation();
             this[this.keyMap.get(event.keyCode)] = pressed;
+        } else {
+            console.log(`Key code: ${event.keyCode}`);
         }
     }
 

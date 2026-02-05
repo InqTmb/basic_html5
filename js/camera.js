@@ -2,24 +2,33 @@
 class Camera {
     constructor({
         width = 640,
-        height = 640,
+        height = 480,
         limitX = 50000,
         limitY = 50000,
         zoom = 1,
         zoomDelta = 0.05,
     } = {}) {
-        //constructor(width, height, limitX, limitY) {
         this.x = div(width, 2);
         this.y = div(height, 2);
         this.zoom = zoom;
         this.width = width;
         this.height = height;
+
+        this.FoVwidth = this.width * this.zoom;
+        this.FoVheight = this.height * this.zoom;
+
+        this.minLimitX = this.x;
+        this.minLimitY = this.y;
         this.limitX = limitX;
         this.limitY = limitY;
 
         this.zoomDelta = zoomDelta; // скорость изменения зума
 
-        this.ChangeZoom(0);
+        this.active = false;
+    }
+
+    set activate(bool) {
+        this.active = bool;
     }
 
     ChangeZoom(delta) {
@@ -37,13 +46,19 @@ class Camera {
     }
 
     MoveHorizontal(dx) {
-        if ((this.x + this.width + dx <= this.limitX) & (this.x + dx >= 0)) {
+        if (
+            (this.x + this.width + dx <= this.limitX) &
+            (this.x + dx >= this.minLimitX)
+        ) {
             this.x = this.x + dx;
         }
     }
 
     MoveVertical(dy) {
-        if ((this.y + this.height + dy <= this.limitY) & (this.y + dy >= 0)) {
+        if (
+            (this.y + this.height + dy <= this.limitY) &
+            (this.y + dy >= this.minLimitY)
+        ) {
             this.y = this.y + dy;
         }
     }

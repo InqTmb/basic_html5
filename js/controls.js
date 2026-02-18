@@ -17,6 +17,7 @@ class Controls {
             [68, "right"],
             [87, "up"],
             [83, "down"],
+            [84, "target"],
         ]);
         document.addEventListener("keydown", (event) =>
             this.update(event, true)
